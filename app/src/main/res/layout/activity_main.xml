@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnMove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="跟随手指移动" />
+
+    <Button
+        android:id="@+id/btnSplit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="爆炸粒子" />
+
+    <Button
+        android:id="@+id/btnArc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="旋转圆(弧线)" />
+
+    <Button
+        android:id="@+id/btnSplash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加载中 (旋转-扩散-水波纹)" />
+
+    <Button
+        android:id="@+id/btnExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="运动消耗" />
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+
+画笔基础
+https://www.gcssloop.com/customview/paint-base
+DrawText函数
+https://blog.csdn.net/akaic/article/details/80041617
+
+
+弧线VIEW
+https://blog.csdn.net/yanzi1225627/article/details/8581897
+https://blog.csdn.net/qq_18432309/article/details/51811546
+https://www.jb51.net/article/121798.htm
+运动消耗VIEW
+https://blog.csdn.net/lj19851227/article/details/82689467
+
+
+
+已知圆心、半径、角度、求圆上的点坐标
+圆点坐标：(x0,y0)
+半径：r
+角度：angle
+则圆上任一点为：（x1,y1）
+x1   =   x0   +   r   *   cos(angle   *   π   /180   )
+y1   =   y0   +   r   *   sin(angle   *   π   /180   )
+
+π/180是什么?
+数学中的角度分弧度和角度两种
+弧度的圆周是2π,而角度的圆周是360°
+所以要将角度化为弧度就只需用角度乘以π/180,反之就除以(π/180)

@@ -12,9 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-/**
- * https://blog.csdn.net/lj19851227/article/details/82689467
- */
 public class ExerciseView extends View {
 
     private Paint mPaint;

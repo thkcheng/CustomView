@@ -24,8 +24,8 @@ public class ExerciseView extends View {
 
     private float mBallX; // 小球中心坐标X轴
     private float mBallY; // 小球中心坐标Y轴
-    private float mBallRadius = 20; // 小球半径
-    private float mBallRingWidth = 15; // 小球半径
+    private float mBallRadius = 20f; // 小球半径
+    private float mBallRingWidth = 15f; // 小球半径
 
     private String mTitleValue = "运动消耗";
     private int kCalValue = 0;  // 最大值100
@@ -33,7 +33,7 @@ public class ExerciseView extends View {
 
     private Rect kCalValueRect = new Rect();
 
-    private float sweepAngle = 0; //扫描度数
+    private float sweepAngle = 0f; //扫描度数
 
     private ValueAnimator mAnimator; //属性动画
 
@@ -60,8 +60,6 @@ public class ExerciseView extends View {
 
         mBallX = mCenterX;
         mBallY = mCenterY - radius;
-
-        Log.e("xxx", "默认X = " + mBallX);
     }
 
     @Override
@@ -161,7 +159,6 @@ public class ExerciseView extends View {
                     // 改变小球的位置 圆点坐标(X) + 半径radius * cos(起始angle270 * );
                     mBallX = (float) (Math.cos((sweepAngle + 270) * Math.PI / 180) * radius + mCenterX);
                     mBallY = (float) (Math.sin((sweepAngle + 270) * Math.PI / 180) * radius + mCenterY);
-                    Log.e("xxx", "改变X = " + mBallX);
                     invalidate();
                 }
             }

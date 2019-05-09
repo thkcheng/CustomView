@@ -36,4 +36,10 @@
         android:layout_height="wrap_content"
         android:text="运动消耗" />
 
+    <Button
+        android:id="@+id/btnGradient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="渐变荧光效果" />
+
 </LinearLayout>

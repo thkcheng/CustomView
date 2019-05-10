@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import app.view.custom.R;
-import app.view.custom.widget.GradientRampFluorescenceView;
+import app.view.custom.widget.ColorFulBar;
 
 public class GradientRampActivity extends AppCompatActivity {
 
-    GradientRampFluorescenceView gv;
+    ColorFulBar gv;
     EditText etCurrentLength;
 
     @Override

@@ -10,7 +10,6 @@ import app.view.custom.demo.ExerciseActivity;
 import app.view.custom.demo.GradientRampActivity;
 import app.view.custom.demo.SplashActivity;
 import app.view.custom.demo.SplitActivity;
-import app.view.custom.widget.GradientRampFluorescenceView;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -17,9 +17,9 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 /**
- * 渐变荧光VIEW
+ * 渐变荧光拖动条
  */
-public class GradientRampFluorescenceView extends View {
+public class ColorFulBar extends View {
 
     private Paint mPaint;
 
@@ -54,13 +54,17 @@ public class GradientRampFluorescenceView extends View {
 
     private boolean isDrag = false; //是否拖拽
 
+    private boolean isFromUser = false; //是否用户拖拽的
+
     private int[] colors = {0xFFFF9731, 0xFFFFC339, 0xFFFFFA44};
 
-    public GradientRampFluorescenceView(Context context) {
+    private OnColorFulBarChangeListener mOnColorFulBarChangeListener;
+
+    public ColorFulBar(Context context) {
         this(context, null);
     }
 
-    public GradientRampFluorescenceView(Context context, @Nullable AttributeSet attrs) {
+    public ColorFulBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         init();
@@ -164,6 +168,8 @@ public class GradientRampFluorescenceView extends View {
         progessX = averageLength * currentProgress + startX;
 
         invalidate();
+
+        setColorFulBarChangeListener(false);
     }
 
 
@@ -187,6 +193,12 @@ public class GradientRampFluorescenceView extends View {
         mHandler.removeMessages(MESSAGE_START_PROGRESS);
     }
 
+    /**
+     * 设置监听
+     */
+    public void setColorFulBarChangeListener(OnColorFulBarChangeListener changeListener) {
+        this.mOnColorFulBarChangeListener = changeListener;
+    }
 
     /**
      * 计算进度球移动的X坐标
@@ -232,6 +244,16 @@ public class GradientRampFluorescenceView extends View {
         return currentProgress;
     }
 
+
+    /**
+     * @param isFromUser 如果进度更改是由用户发起的
+     */
+    private void setColorFulBarChangeListener(boolean isFromUser) {
+        if (mOnColorFulBarChangeListener != null) {
+            mOnColorFulBarChangeListener.onProgressChanged(this, currentProgress, isFromUser);
+        }
+    }
+
     /**
      * 重写该方法使进度跟随手指移动
      */
@@ -251,14 +273,16 @@ public class GradientRampFluorescenceView extends View {
                 // 如果点击的距离在合适的范围内并且没有超过边界值 则改变(滑动)
                 if (mDist < (progessBollRadius + MOVE_OFFSET)) {
                     if (event.getX() >= startX && event.getX() <= endX) {
-                        progessX = event.getX() + startX;
                         isDrag = true;
+                        isFromUser = true;
+                        progessX = event.getX() + startX;
                         getCurrentProgress();
                         invalidate();
                     }
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                isFromUser = false;
                 MOVE_OFFSET = MOVE_OFFSET_DEFAULT;
                 if (isHandler) {
                     mHandler.sendEmptyMessageDelayed(MESSAGE_START_PROGRESS, 1000);
@@ -278,16 +302,33 @@ public class GradientRampFluorescenceView extends View {
             switch (msg.what) {
                 case MESSAGE_START_PROGRESS:
                     isHandler = true;
-                    currentProgress += 1;
+                    if (currentProgress == 0f) {
+                        currentProgress = currentProgress + 1f;
+                    }
                     getProgessX();
+                    currentProgress += 1;
                     if (currentProgress >= maxProgress) {
                         mHandler.removeMessages(MESSAGE_START_PROGRESS);
                         isHandler = false;
                     } else {
                         mHandler.sendEmptyMessageDelayed(MESSAGE_START_PROGRESS, 1000);
                     }
+                    setColorFulBarChangeListener(isFromUser);
                     break;
             }
         }
     };
+
+
+    public interface OnColorFulBarChangeListener {
+
+        /**
+         * 进度条改变
+         *
+         * @param colorFulBar 当前view
+         * @param progress    当前进度
+         * @param fromUser    如果进度更改是由用户发起的，则为True
+         */
+        void onProgressChanged(ColorFulBar colorFulBar, float progress, boolean fromUser);
+    }
 }

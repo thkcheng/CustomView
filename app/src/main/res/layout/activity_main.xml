@@ -40,6 +40,6 @@
         android:id="@+id/btnGradient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="渐变荧光效果" />
+        android:text="渐变荧光进度条" />
 
 </LinearLayout>

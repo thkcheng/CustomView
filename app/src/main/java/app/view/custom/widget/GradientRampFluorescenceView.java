@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 /**
@@ -48,6 +49,10 @@ public class GradientRampFluorescenceView extends View {
 
     private float MOVE_OFFSET_DEFAULT = 20f; //默认偏移量
     private float MOVE_OFFSET = MOVE_OFFSET_DEFAULT; //滑动时偏移量
+
+    private boolean isCurrentProgress = false; //是否直接跳到某一个进度
+
+    private boolean isDrag = false; //是否拖拽
 
     private int[] colors = {0xFFFF9731, 0xFFFFC339, 0xFFFFFA44};
 
@@ -154,7 +159,11 @@ public class GradientRampFluorescenceView extends View {
 
         checkCurrentProgress();
 
-        getProgessX();
+        isCurrentProgress = true;
+
+        progessX = averageLength * currentProgress + startX;
+
+        invalidate();
     }
 
 
@@ -174,15 +183,33 @@ public class GradientRampFluorescenceView extends View {
      * 暂停播放
      */
     public void stopProgress() {
+        isHandler = false;
         mHandler.removeMessages(MESSAGE_START_PROGRESS);
     }
+
 
     /**
      * 计算进度球移动的X坐标
      */
     private void getProgessX() {
-        progessX = averageLength * currentProgress + startX;
+        if (isCurrentProgress) {
+            //开启过setCurrentProgress再开启hanlder时加过startX就不用再加了
+            progessX = averageLength * currentProgress + startX / 2;
+        } else if (isDrag) {
+            progessX = averageLength * currentProgress;
+        } else {
+            progessX = averageLength * currentProgress + startX;
+        }
         invalidate();
+    }
+
+    /**
+     * 根据坐标x和平均长度反向计算出当前进度
+     */
+    private void getCurrentProgress() {
+        checkAverageLength();
+        progessX = progessX - startX;
+        currentProgress = progessX / averageLength;
     }
 
     /**
@@ -224,8 +251,9 @@ public class GradientRampFluorescenceView extends View {
                 // 如果点击的距离在合适的范围内并且没有超过边界值 则改变(滑动)
                 if (mDist < (progessBollRadius + MOVE_OFFSET)) {
                     if (event.getX() >= startX && event.getX() <= endX) {
-                        progessX = event.getX();
-                        currentProgress = progessX / averageLength - startX; //根据坐标x和平均长度反向计算出当前进度
+                        progessX = event.getX() + startX;
+                        isDrag = true;
+                        getCurrentProgress();
                         invalidate();
                     }
                 }
@@ -233,7 +261,7 @@ public class GradientRampFluorescenceView extends View {
             case MotionEvent.ACTION_UP:
                 MOVE_OFFSET = MOVE_OFFSET_DEFAULT;
                 if (isHandler) {
-                    mHandler.sendEmptyMessage(MESSAGE_START_PROGRESS);
+                    mHandler.sendEmptyMessageDelayed(MESSAGE_START_PROGRESS, 1000);
                 }
                 break;
         }
@@ -252,7 +280,7 @@ public class GradientRampFluorescenceView extends View {
                     isHandler = true;
                     currentProgress += 1;
                     getProgessX();
-                    if (currentProgress == maxProgress) {
+                    if (currentProgress >= maxProgress) {
                         mHandler.removeMessages(MESSAGE_START_PROGRESS);
                         isHandler = false;
                     } else {

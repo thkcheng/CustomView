@@ -4,14 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".demo.EventMoveActivity">
+    tools:context=".demo.RotoRecActivity">
 
-    <app.view.custom.widget.EventMoveView
+    <app.view.custom.widget.RotaRectView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <!--<app.view.custom.widget.BethelArcView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
 
 </android.support.constraint.ConstraintLayout>

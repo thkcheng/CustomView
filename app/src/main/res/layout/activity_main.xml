@@ -42,4 +42,10 @@
         android:layout_height="wrap_content"
         android:text="渐变荧光进度条" />
 
+    <Button
+        android:id="@+id/btnRota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="旋转方块" />
+
 </LinearLayout>

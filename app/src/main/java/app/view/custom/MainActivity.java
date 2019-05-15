@@ -8,6 +8,7 @@ import app.view.custom.demo.ArcWhirlActivity;
 import app.view.custom.demo.EventMoveActivity;
 import app.view.custom.demo.ExerciseActivity;
 import app.view.custom.demo.GradientRampActivity;
+import app.view.custom.demo.RotoRecActivity;
 import app.view.custom.demo.SplashActivity;
 import app.view.custom.demo.SplitActivity;
 
@@ -30,5 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btnGradient).setOnClickListener(v -> startActivity(new Intent(this, GradientRampActivity.class)));
 
+        findViewById(R.id.btnRota).setOnClickListener(v -> startActivity(new Intent(this, RotoRecActivity.class)));
     }
 }
